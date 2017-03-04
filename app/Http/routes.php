@@ -22,6 +22,8 @@ Route::auth();
 //-------------------------------------------------------
 Route::group(['middleware' => 'auth'], function()
 {
+    Route::get('/options', 'FrontController@userOptions');
+
     Route::get('/projects', 'FrontController@getProjects');
     Route::get('/projects/add', 'FrontController@addProject');
 

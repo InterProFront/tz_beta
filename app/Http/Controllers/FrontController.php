@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class FrontController extends Controller
 {
+
+    public  function userOptions(){
+        return view('');
+    }
+
+
     public function getProjects(){
 
         $project = Auth::user()->projects;
