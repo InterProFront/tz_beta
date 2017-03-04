@@ -1,0 +1,167 @@
+.thread{
+  position: absolute;
+
+
+  // Icon in wrapper
+  &__mark{
+    z-index: 100;
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 100%;
+    border: solid 4px white;
+    background-clip: border-box;
+    background: #0b9ed4;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.3), 0 0 0 2px rgba(0,0,0,0.2), 0 5px 4px rgba(0,0,0,0.4);
+    &--new{
+      background: #a30600;
+    }
+  }
+  &__number{
+    color: #FFFFFF;
+    font-family: @Arial;
+  }
+
+  // Edit menu (Gear)
+  //====================================================================================================================
+  &__options{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 24px;
+    height: 24px;
+    &:hover{
+      .thread__options-list{
+        height: auto;
+        opacity: 1;
+        transition: opacity 0.75s ease;
+      }
+      .thread__icon{
+        background: #666666;
+      }
+    }
+  }
+  &__icon{
+    background: #999999;
+    width: 16px;
+    margin: 4px;
+    height: 16px;
+    mask-size: cover;
+    mask: url(../img/gear.svg) no-repeat 50% 50%;
+    &:hover, &:focus{
+      background: #666666;
+    }
+  }
+  &__options-list{
+    height: 0;
+    opacity: 0;
+
+    margin: 0;
+    padding: 0;
+    left: 24px;
+    top:-1px;
+    position: absolute;
+    border: 1px solid #999999;
+  }
+  &__option-item{
+    list-style-type: none;
+    padding: 5px 10px;
+    font-family: @Arial;
+    color: #666666;
+    background: #FFFFFF;
+    &:hover, &:focus{
+      background: #e5e5e5;
+      cursor: pointer;
+    }
+  }
+  //====================================================================================================================
+
+  &__body{
+    min-width: 300px;
+    max-width: 300px;
+    box-sizing: border-box;
+    position: relative;
+    padding: 20px;
+    top: -15px;
+    left: 15px;
+    border: 1px solid #999999;
+    background: #FFFFFF;
+    &--comment{
+      margin-top: -1px;
+      background: #f3f3f3;
+    }
+  }
+
+
+  &__box{
+    padding-top: 20px;
+  }
+  &__title{
+    font-family: @Arial;
+    line-height: 1.5em;
+    color: #333333;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  &__content{
+    font-size:14px;
+    font-family: @Arial;
+    color: #666666;
+    line-height: 1.5em;
+  }
+  &__answer{
+    padding-top: 20px;
+  }
+  &__answer--input{
+    height: 28px;
+    transition: 0.5s height ease;
+    &:not(:invalid){
+      height: 80px;
+    }
+    &:hover, &:focus{
+      outline: none;
+      border: 1px solid #0b9ed4;
+    }
+    &:focus{
+      height: 80px;
+      transition: 1s height ease;
+    }
+  }
+
+  &__row{
+    margin-bottom: 10px;
+    &--right{
+      text-align: right;
+    }
+  }
+  &__input-title{
+    font-size:14px;
+    font-family: @Arial;
+    font-weight: bold;
+    display: block;
+    padding-bottom: 5px;
+    color: #333333;
+  }
+  &__input{
+    border: 1px solid #999999;
+    width: 100%;
+    font-size: 14px;
+    font-family: @Arial;
+    box-sizing: border-box;
+    padding: 5px;
+    color: #333333;
+    resize: none;
+    &--text{
+      height: 120px;
+    }
+    &:hover, &:focus{
+      outline: none;
+      border: 1px solid #0b9ed4;
+    }
+  }
+
+}
