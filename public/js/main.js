@@ -18,7 +18,7 @@ var app = new Vue({
         lastUpdate: 0,
 
 
-        buffer        : []
+        buffer: []
     },
     methods: {
         init          : function (project_id, page_id) {
@@ -51,11 +51,11 @@ var app = new Vue({
                 );
         },
 
-        getUser: function( id ) {
+        getUser     : function (id) {
             var haveUser = false;
             var user;
-            var _this = this;
-            var data = {
+            var _this    = this;
+            var data     = {
                 id: id
             };
 
@@ -74,87 +74,87 @@ var app = new Vue({
                 this.users.push(user);
 
                 this.$http.post('/get_user', data, {
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-                    }).then(
-                        function (response) {
-                            if (response.body.error) {
-                                console.log(id);
-                                console.log(response.body.error_message)
-                            } else {
-                                $.each(_this.users, function (key, value) {
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                }).then(
+                    function (response) {
+                        if (response.body.error) {
+                            console.log(id);
+                            console.log(response.body.error_message)
+                        } else {
+                            $.each(_this.users, function (key, value) {
 
-                                    if (value['id'] == id) { // Если юзер есть у нас в данных то возвращаем его
-                                        value['fio'] = response.body.content.fio;
-                                        value['avatar']    = response.body.content.avatar;
-                                        value['created_at']    = response.body.content.created_at;
-                                        value['name']    = response.body.content.name;
-                                        value['updated_at']    = response.body.content.update_at;
-                                        value['email']    = response.body.content.email;
-                                    }
-                                })
-                            }
-
-                        },
-                        function (response) {
-                            // error response
+                                if (value['id'] == id) { // Если юзер есть у нас в данных то возвращаем его
+                                    value['fio']        = response.body.content.fio;
+                                    value['avatar']     = response.body.content.avatar;
+                                    value['created_at'] = response.body.content.created_at;
+                                    value['name']       = response.body.content.name;
+                                    value['updated_at'] = response.body.content.update_at;
+                                    value['email']      = response.body.content.email;
+                                }
+                            })
                         }
-                    );
+
+                    },
+                    function (response) {
+                        // error response
+                    }
+                );
             }
             return user; // возвращаем какого-нибудь юзера
         },
         //===============================================================================================================
-        addThread: function( event ){
+        addThread   : function (event) {
 
-            var left = event.pageX - $(event.currentTarget).offset().left -15;
-            var top = event.pageY - $(event.currentTarget).offset().top - 15;
+            var left = event.pageX - $(event.currentTarget).offset().left - 15;
+            var top  = event.pageY - $(event.currentTarget).offset().top - 15;
 
 
-            if( this.buffer.length <= 0 ){
+            if (this.buffer.length <= 0) {
                 this.buffer.push({
-                    title: '',
-                    content: '',
+                    title     : '',
+                    content   : '',
                     project_id: this.project_id,
-                    page_id: this.page_id,
-                    author_id: this.currentUser.id,
-                    state: 'add',
-                    top: top,
-                    left: left,
-                    user: this.currentUser
+                    page_id   : this.page_id,
+                    author_id : this.currentUser.id,
+                    state     : 'add',
+                    top       : top,
+                    left      : left,
+                    user      : this.currentUser
                 });
-            }else{
-                if( this.buffer[0].title == '' && this.buffer[0].content == '' ){
-                    this.buffer.splice(0,1);
-                }else{
-                    this.buffer[0].top = top;
+            } else {
+                if (this.buffer[0].title == '' && this.buffer[0].content == '') {
+                    this.buffer.splice(0, 1);
+                } else {
+                    this.buffer[0].top  = top;
                     this.buffer[0].left = left;
                 }
             }
         },
-        clearBuffer: function(){
-          this.buffer = [];
+        clearBuffer : function () {
+            this.buffer = [];
         },
-        appendThread: function( item ){
+        appendThread: function (item) {
             item.state = 'idle';
-            if( item.author_id == this.currentUser.id){
+            if (item.author_id == this.currentUser.id) {
                 item.user = this.currentUser;
-            }else{
-                if (typeof item.user == 'undefined'){
-                    this.getUser( item.ownerID );
+            } else {
+                if (typeof item.user == 'undefined') {
+                    this.getUser(item.ownerID);
                 }
             }
-            item.comment = [];
+            item.comment    = [];
             this.lastThread = item.number;
 
-            this.threads.push( item );
+            this.threads.push(item);
         },
         //==============================================================================================================
-        fetchUpdate: function () {
+        fetchUpdate : function () {
             var _this = this;
 
             var data = {
-                project_id  : this.project_id,
-                page_id     : this.page_id,
-                last_update : this.lastUpdate
+                project_id : this.project_id,
+                page_id    : this.page_id,
+                last_update: this.lastUpdate
             };
 
 
@@ -170,11 +170,35 @@ var app = new Vue({
                         if (typeof response.body.content == 'string') {
                             console.log(response.body.content)
                         } else {
-                            _this.lastUpdate = response.body.last_update;
+                            if (_this.lastUpdate == 0) {
+                                $.each(response.body.content.threads, function (key, value) {
+                                    if(value['deleted'] != 1){
+                                        _this.appendThread(value);
+                                    }
+                                });
 
-                            $.each(response.body.content.threads, function (key, value) {
-                                _this.appendThread(value);
-                            });
+                            } else {
+                                $.each(response.body.content.threads, function (key, value) {
+                                    var haveInThreads = false;
+                                    $.each(_this.threads, function (t_key, t_value) {
+                                        // Если  такой тред уже есть то просто обновляем
+                                        if (t_value['id'] == value['id']) {
+                                            if(value['deleted'] == 1){
+                                                _this.removeThread( value['id'] );
+                                            }else{
+                                                t_value = value;
+                                                haveInThreads = true;
+                                                return false;
+                                            }
+                                        }
+                                    });
+                                    if(! haveInThreads){
+                                        _this.appendThread(value);
+                                    }
+
+                                });
+                            }
+                            _this.lastUpdate = response.body.last_update;
                             //$.each(response.body.content.comments, function (key, value) {
                             //    $.each(_this.threads, function (t_key, t_value) {
                             //        if (value['threadID'] == t_value['id']) {
@@ -196,9 +220,22 @@ var app = new Vue({
             );
         },
         //==============================================================================================================
-        setTabState: function (state) {
+        removeThread: function (id) {
+            _this          = this;
+            var delete_key = -1;
+            $.each(this.threads, function (key, value) {
+                if (value['id'] == id) {
+                    delete_key = key;
+                }
+            });
+            if (delete_key >= 0) {
+                this.threads.splice(delete_key, 1);
+            }
+        },
+        //==============================================================================================================
+        setTabState : function (state) {
             this.tab = state;
         }
     }
 });
-app.init( $('#app').data('project-id'), $('#app').data('page-id') );
+app.init($('#app').data('project-id'), $('#app').data('page-id'));

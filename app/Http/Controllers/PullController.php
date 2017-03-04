@@ -78,10 +78,10 @@ class PullController extends Controller
 //            Log::info($item->updated_at->timestamp.'');
 //        }
 
+        $last_update_date = date('Y-m-d H:i:s', $last_update);
 
-
-        $threads = DB::table('threads')->where('page_id', $page_id)->whereRaw('updated_at >'.$last_update)->get();
-        $comments = DB::table('comments')->where('page_id', $page_id)->whereRaw('updated_at > '.$last_update)->get();
+        $threads = DB::table('threads')->where('page_id', $page_id)->where('updated_at', '>', $last_update_date)->get();
+        $comments = DB::table('comments')->where('page_id', $page_id)->where('updated_at', '>', $last_update_date)->get();
 
         $thread_count = count($threads);
         $comment_count = count($comments);

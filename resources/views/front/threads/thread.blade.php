@@ -11,7 +11,7 @@
                 </div>
                 <ul class="thread__options-list">
                     <li class="thread__option-item">Редактировать</li>
-                    <li class="thread__option-item">Удалить</li>
+                    <li class="thread__option-item" v-on:click="removeThis( this )">Удалить</li>
                     <li class="thread__option-item">Готово</li>
                 </ul>
             </div>
