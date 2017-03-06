@@ -18,7 +18,7 @@
             </div>
             <div class="author__name-and-time">
                 <p class="author__name">@{{ comment_data.user.fio }}</p>
-                <p class="author__time">12 марта, 20:30</p>
+                <p class="author__time">@{{ comment_data.updated_at }}</p>
             </div>
         </div>
 

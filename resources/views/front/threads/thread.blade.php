@@ -1,6 +1,6 @@
 <script type="text/x-template" id="thread">
 
-    <div class="thread"  v-bind:style="{left: thread_data.left+'px', top: thread_data.top+'px'}">
+    <div class="thread" м v-bind:style="{left: thread_data.left+'px', top: thread_data.top+'px'}">
         <div class="thread__mark" v-on:click.stop.prevent="">
             <span class="thread__number">@{{ thread_data.index_number }}</span>
         </div>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="author__name-and-time">
                     <p class="author__name">@{{ thread_data.user.fio }}</p>
-                    <p class="author__time">12 марта, 20:30</p>
+                    <p class="author__time">@{{ thread_data.updated_at }}</p>
                 </div>
             </div>
 

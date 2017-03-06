@@ -1,6 +1,18 @@
 .thread{
   position: absolute;
 
+  // Если ховер или активный элемент то разврачиваем
+  .active{
+    .thread__body{
+      display: block;
+    }
+  }
+  &:hover{
+    .thread__body{
+      display: block;
+    }
+  }
+  //===============================
 
   // Icon in wrapper
   &__mark{
@@ -81,6 +93,7 @@
   //====================================================================================================================
 
   &__body{
+    display: none;
     min-width: 300px;
     max-width: 300px;
     box-sizing: border-box;

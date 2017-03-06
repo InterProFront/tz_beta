@@ -235,6 +235,7 @@ var app = new Vue({
                                             $.each(thread_value.comments, function (comment_key, comment_value) {
                                                 if (comment_value['id'] == value['id']) {
                                                     comment_value['description'] = value['description'];
+                                                    comment_value['updated_at'] = value['updated_at'];
                                                     newItem                      = false; // Не новый элемент
                                                 }
                                             });

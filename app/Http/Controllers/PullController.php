@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Jenssegers\Date\Date;
 
 class PullController extends Controller
 {
@@ -78,6 +79,8 @@ class PullController extends Controller
 //            Log::info($item->updated_at->timestamp.'');
 //        }
 
+
+        $ruDate = Date::createFromTimestamp($last_update)->format('d F Y');
         $last_update_date = date('Y-m-d H:i:s', $last_update);
 
         $threads = DB::table('threads')->where('page_id', $page_id)->where('updated_at', '>', $last_update_date)->get();
@@ -85,6 +88,7 @@ class PullController extends Controller
 
         $thread_count = count($threads);
         $comment_count = count($comments);
+
 
         if($thread_count > 0 or $comment_count > 0) //Если массив не пустой, значит в результате записи до максимальных номеров на странице
         {

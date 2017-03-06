@@ -56,6 +56,7 @@ Vue.component('thread', {
 
                     } else {
                         _this.thread_data.state = 'idle';
+                        _this.$parent.fetchUpdate();
                     }
                 },
                 function (response) {
