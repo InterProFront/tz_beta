@@ -3,8 +3,8 @@ Vue.component('buffer', {
     props   : ['thread_data'],
     methods : {
         complete: function () {
-            this.$parent.fetchUpdate();
             var _this = this;
+            this.thread_data.description = this.thread_data.description.replace(/<br\s*[\/]?>/gi,"\n");
             this.$http.post('/update_thread', {
                 page_id   : this.$parent.page_id,
                 project_id: this.$parent.project_id,
@@ -19,11 +19,7 @@ Vue.component('buffer', {
                     if( response.body.error ){
 
                     }else{
-                        _this.thread_data.id = response.body.content['id'];
-                        _this.thread_data.number = response.body.content['number'];
-                        _this.thread_data.index_number = response.body.content['index_number'];
-
-                        _this.$parent.appendThread( _this.thread_data );
+                        _this.$parent.fetchUpdate();
                         _this.$parent.clearBuffer();
                     }
                 },

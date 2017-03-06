@@ -51,7 +51,7 @@ var app = new Vue({
                 );
         },
 
-        getUser     : function (id) {
+        getUser      : function (id) {
             var haveUser = false;
             var user;
             var _this    = this;
@@ -103,7 +103,7 @@ var app = new Vue({
             return user; // возвращаем какого-нибудь юзера
         },
         //===============================================================================================================
-        addThread   : function (event) {
+        addThread    : function (event) {
 
             var left = event.pageX - $(event.currentTarget).offset().left - 15;
             var top  = event.pageY - $(event.currentTarget).offset().top - 15;
@@ -119,7 +119,8 @@ var app = new Vue({
                     state     : 'add',
                     top       : top,
                     left      : left,
-                    user      : this.currentUser
+                    user      : this.currentUser,
+                    comments  : []
                 });
             } else {
                 if (this.buffer[0].title == '' && this.buffer[0].content == '') {
@@ -130,10 +131,10 @@ var app = new Vue({
                 }
             }
         },
-        clearBuffer : function () {
+        clearBuffer  : function () {
             this.buffer = [];
         },
-        appendThread: function (item) {
+        appendThread : function (item) {
             item.state = 'idle';
             if (item.author_id == this.currentUser.id) {
                 item.user = this.currentUser;
@@ -142,13 +143,26 @@ var app = new Vue({
                     this.getUser(item.ownerID);
                 }
             }
-            item.comment    = [];
+            item.comments   = [];
             this.lastThread = item.number;
 
             this.threads.push(item);
         },
+        appendComment: function (item, thread_key) {
+
+            thread_item = this.threads[thread_key];
+            item.state  = 'idle';
+            if (item.author_id == this.currentUser.id) {
+                item.user = this.currentUser;
+            } else {
+                if (typeof item.user == 'undefined') {
+                    this.getUser(item.ownerID);
+                }
+            }
+            thread_item.comments.push(item);
+        },
         //==============================================================================================================
-        fetchUpdate : function () {
+        fetchUpdate  : function () {
             var _this = this;
 
             var data = {
@@ -172,45 +186,80 @@ var app = new Vue({
                         } else {
                             if (_this.lastUpdate == 0) {
                                 $.each(response.body.content.threads, function (key, value) {
-                                    if(value['deleted'] != 1){
+                                    if (value['deleted'] != 1) {
                                         _this.appendThread(value);
                                     }
+                                });
+
+                                $.each(response.body.content.comments, function (key, value) {
+                                    $.each(_this.threads, function (t_key, t_value) {
+                                        if (value['deleted'] != 1) {
+                                            if (value['thread_id'] == t_value['id']) {
+
+                                                _this.appendComment(value, t_key);
+                                            }
+
+                                        }
+                                    });
                                 });
 
                             } else {
+
+                                // обновляем или добавляем новые Треды
                                 $.each(response.body.content.threads, function (key, value) {
-                                    var haveInThreads = false;
-                                    $.each(_this.threads, function (t_key, t_value) {
-                                        // Если  такой тред уже есть то просто обновляем
-                                        if (t_value['id'] == value['id']) {
-                                            if(value['deleted'] == 1){
-                                                _this.removeThread( value['id'] );
-                                            }else{
-                                                t_value = value;
-                                                haveInThreads = true;
-                                                return false;
-                                            }
+                                    var newItem = true;
+                                    $.each(_this.threads, function (thread_key, thread_value) {
+                                        // Если ID совпали то обновляем данные
+                                        if (thread_value['id'] == value['id']) {
+                                            thread_value['title']        = value['title'];
+                                            thread_value['description']  = value['description'];
+                                            thread_value['index_number'] = value['index_number'];
+                                            thread_value['updated_at']   = value['updated_at'];
+                                            newItem                      = false; // Не новый элемент
                                         }
+
                                     });
-                                    if(! haveInThreads){
+                                    if (newItem) {
+                                        // Если новый то добавляем ко остальным
                                         _this.appendThread(value);
                                     }
-
                                 });
-                            }
-                            _this.lastUpdate = response.body.last_update;
-                            //$.each(response.body.content.comments, function (key, value) {
-                            //    $.each(_this.threads, function (t_key, t_value) {
-                            //        if (value['threadID'] == t_value['id']) {
-                            //            value['number_in_thread'] = t_value['comments'].length + 1;
-                            //            value['user']             = _this.checkUser(value['ownerID']);
-                            //
-                            //            _this.lastComment = value['number_in_page'];
-                            //            t_value['comments'].push(value);
-                            //        }
-                            //    });
-                            //});
 
+                                // Обновляем или добавляем новые комменты
+                                $.each(response.body.content.comments, function (key, value) {
+                                    var newItem = true;
+
+                                    $.each(_this.threads, function (thread_key, thread_value) {
+
+                                        if (value['thread_id'] == thread_value['id']) {
+                                            $.each(thread_value.comments, function (comment_key, comment_value) {
+                                                if (comment_value['id'] == value['id']) {
+                                                    comment_value['description'] = value['description'];
+                                                    newItem                      = false; // Не новый элемент
+                                                }
+                                            });
+                                            if (newItem) {
+                                                _this.appendComment(value, thread_key);
+                                            }
+
+                                        }
+                                    });
+                                });
+
+
+                                // удаляем все что пришли к нам
+                                $.each(response.body.content.threads, function (key, value) {
+                                    if (value['deleted'] == 1) {
+
+                                        _this.removeThread(value['id'])
+
+                                    }
+                                });
+
+
+                            }
+                            // Время последнего обновления
+                            _this.lastUpdate = response.body.last_update;
                         }
                     }
                 },
@@ -220,7 +269,7 @@ var app = new Vue({
             );
         },
         //==============================================================================================================
-        removeThread: function (id) {
+        removeThread : function (id) {
             _this          = this;
             var delete_key = -1;
             $.each(this.threads, function (key, value) {
@@ -233,7 +282,7 @@ var app = new Vue({
             }
         },
         //==============================================================================================================
-        setTabState : function (state) {
+        setTabState  : function (state) {
             this.tab = state;
         }
     }

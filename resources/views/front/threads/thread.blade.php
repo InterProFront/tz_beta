@@ -10,8 +10,8 @@
                 <div class="thread__icon">
                 </div>
                 <ul class="thread__options-list">
-                    <li class="thread__option-item">Редактировать</li>
-                    <li class="thread__option-item" v-on:click="removeThis( this )">Удалить</li>
+                    <li class="thread__option-item" v-on:click="editThis()">Редактировать</li>
+                    <li class="thread__option-item" v-on:click="removeThis()">Удалить</li>
                     <li class="thread__option-item">Готово</li>
                 </ul>
             </div>
@@ -43,7 +43,7 @@
 
             <div class="thread__box" v-if="thread_data.state == 'idle' ">
                 <p class="thread__title">@{{ thread_data.title }}</p>
-                <p class="thread__content">@{{ thread_data.description }}</p>
+                <p class="thread__content" v-html="thread_data.description"></p>
             </div>
 
             <div class="thread__box" v-if="thread_data.state == 'edit' ">
@@ -56,15 +56,21 @@
                     <textarea  class="thread__input thread__input--text" v-model="thread_data.description"></textarea>
                 </div>
                 <div class="thread__row thread__row--right">
-                    <button class="button">Сохранить</button>
+                    <button class="button" v-on:click="saveThis()">Сохранить</button>
                 </div>
             </div>
 
 
-            {{--<div class="thread__answer">--}}
-                {{--<textarea class="thread__input thread__answer--input" placeholder="Comment" required="required"></textarea>--}}
-            {{--</div>--}}
+            <div class="thread__answer" v-if="(thread_data.comments.length == 0 && thread_data.state == 'idle')">
+                <textarea class="thread__input thread__answer--input"
+                          placeholder="Комментарий"
+                          v-model="comment_text"
+                          v-on:keydown.ctrl.13="addComment('')"
+                          required="required"></textarea>
+            </div>
+
         </div>
+        <comment v-for="(item, index) in thread_data.comments" :comment_data="item" :comment_number="index"></comment>
     </div>
 
 </script>

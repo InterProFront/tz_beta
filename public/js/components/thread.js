@@ -1,6 +1,11 @@
 Vue.component('thread', {
     template: '#thread',
     props   : ['thread_data'],
+    data    : function () {
+        return {
+            comment_text: this.comment_text
+        }
+    },
     methods : {
 
         removeThis: function () {
@@ -16,10 +21,9 @@ Vue.component('thread', {
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
             }).then(
                 function (response) {
-                    if(response.body.error){
+                    if (response.body.error) {
 
-                    }else{
-                        _this.$parent.removeThread(_this.thread_data.id);
+                    } else {
                         _this.$parent.fetchUpdate();
                     }
                 },
@@ -29,8 +33,64 @@ Vue.component('thread', {
         },
 
         editThis: function () {
+            this.thread_data.description = this.thread_data.description.replace(/<br\s*[\/]?>/gi,"\n");
+            this.thread_data.state = 'edit';
+        },
+
+        saveThis  : function () {
+            _this = this;
+            this.thread_data.description = this.thread_data.description.replace(/(?:\r\n|\r|\n)/g, '<br>');
+            this.$http.post('/update_thread', {
+                page_id    : this.$parent.page_id,
+                project_id : this.$parent.project_id,
+                top        : this.thread_data.top,
+                left       : this.thread_data.left,
+                number     : this.thread_data.number,
+                title      : this.thread_data.title,
+                description: this.thread_data.description
+            }, {
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            }).then(
+                function (response) {
+                    if (response.body.error) {
+
+                    } else {
+                        _this.thread_data.state = 'idle';
+                    }
+                },
+                function (response) {
+
+                });
+        },
+        addComment: function (item) {
+            var comment;
+            _this = this;
+            if (item == '') {
+                comment = this.comment_text;
+            } else {
+                comment = item;
+            }
+            this.$http.post('/update_comment', {
+                page_id    : this.$parent.page_id,
+                project_id : this.$parent.project_id,
+                thread_number: this.thread_data.number,
+                description: comment
+            }, {
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            }).then(
+                function (response) {
+                    if (response.body.error) {
+
+                    } else {
+                        _this.$parent.fetchUpdate();
+                    }
+                },
+                function (response) {
+
+                });
+
+            this.comment_text = '';
 
         }
-
     }
 });

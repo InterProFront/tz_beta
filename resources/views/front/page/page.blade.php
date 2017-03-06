@@ -23,10 +23,12 @@
 
     </section>
      @include('front.threads.thread')
+     @include('front.threads.comment')
 @endsection
 
 @section('scripts')
     <script src="/js/components/buffer.js"></script>
+    <script src="/js/components/comment.js"></script>
     <script src="/js/components/thread.js"></script>
     <script src="/js/main.js"></script>
 @endsection

@@ -33,15 +33,21 @@ class ThreadController extends Controller
 
         $threads = Thread::where('page_id', $page_id)->where('deleted', false)->where('index_number', '>', $current_number)->get();
 
+        $zero_threads = true;
+
         foreach($threads as $thread)
         {
-            $current_number++;
             $thread->index_number = $current_number;
             $thread->save();
+            $current_number++;
+
+            $zero_threads = false;
         }
 
         DB::commit();
         //]]]
+
+        return $zero_threads;
     }
 
     /**
@@ -132,7 +138,6 @@ class ThreadController extends Controller
 
                 $page->max_thread_number++;
                 $page->max_thread_index_number++;
-                $page->save();
             }
 
             $change_deleted = false;
@@ -170,7 +175,22 @@ class ThreadController extends Controller
 
             if($change_deleted)
             {
-                $this->renumThreads($page_id, $current_number);
+                $zero_threads = $this->renumThreads($page_id, $current_number);
+
+                if($zero_threads)
+                {
+                    $page->max_thread_number = 0;
+                    $page->max_thread_index_number = 0;
+                }
+                else
+                {
+                    $page->max_thread_index_number--;
+                }
+            }
+
+            if($itnew or $change_deleted)
+            {
+                $page->save();
             }
         }
         catch(\Exception $e)
