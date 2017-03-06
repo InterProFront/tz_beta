@@ -33,12 +33,16 @@ Vue.component('thread', {
         },
 
         editThis: function () {
+            this.thread_data.active = true;
             this.thread_data.description = this.thread_data.description.replace(/<br\s*[\/]?>/gi,"\n");
             this.thread_data.state = 'edit';
         },
 
         saveThis  : function () {
             _this = this;
+            this.thread_data.active = false;
+
+
             this.thread_data.description = this.thread_data.description.replace(/(?:\r\n|\r|\n)/g, '<br>');
             this.$http.post('/update_thread', {
                 page_id    : this.$parent.page_id,

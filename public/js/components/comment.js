@@ -48,6 +48,7 @@ Vue.component('comment',{
         },
         removeThis: function(){
 
-        }
+        },
+
     }
 });

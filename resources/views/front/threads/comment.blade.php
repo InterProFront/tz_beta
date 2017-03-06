@@ -18,7 +18,7 @@
             </div>
             <div class="author__name-and-time">
                 <p class="author__name">@{{ comment_data.user.fio }}</p>
-                <p class="author__time">@{{ comment_data.updated_at }}</p>
+                <p class="author__time">@{{ comment_data.updated_at_formated }}</p>
             </div>
         </div>
 
@@ -30,7 +30,7 @@
         <div class="thread__box" v-if="comment_data.state == 'edit' ">
             <div class="thread__row">
                 <label class="thread__input-title">Описание</label>
-                        <textarea  class="thread__input thread__input--text" v-model="comment_data.description"></textarea>
+                        <textarea  class="thread__input thread__input--text"  v-model="comment_data.description"></textarea>
             </div>
             <div class="thread__row thread__row--right">
                 <button class="button" v-on:click.stop.prevent="saveThis()">Сохранить</button>
@@ -43,6 +43,10 @@
                           placeholder="Комментарий"
                           v-model="comment_text"
                           v-on:keydown.ctrl.13="addComment()"
+
+                          v-on:focus="this.$parent.active = true"
+                          v-on:focusout="this.$parent.active = false"
+
                           required="required"></textarea>
         </div>
 

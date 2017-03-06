@@ -2,14 +2,13 @@
   position: absolute;
 
   // Если ховер или активный элемент то разврачиваем
-  .active{
-    .thread__body{
-      display: block;
+  &:hover,&.active{
+    .thread__mark{
+      z-index: 201;
     }
-  }
-  &:hover{
     .thread__body{
       display: block;
+      z-index: 200;
     }
   }
   //===============================
@@ -52,6 +51,9 @@
         opacity: 1;
         transition: opacity 0.75s ease;
       }
+      .thread__option-item{
+        display: block;
+      }
       .thread__icon{
         background: #666666;
       }
@@ -81,6 +83,7 @@
   }
   &__option-item{
     list-style-type: none;
+    display: none;
     padding: 5px 10px;
     font-family: @Arial;
     color: #666666;

@@ -17,7 +17,7 @@ class PullController extends Controller
      */
     public function __construct()
     {
-
+        Date::setLocale('ru');
     }
 
     public function draw()
@@ -35,11 +35,14 @@ class PullController extends Controller
                 'project_id' => 'required|integer',
                 'page_id' => 'required|integer',
                 'last_update' => 'integer',
+                'time_zone_hours' => 'required|integer'
             ]
         );
 
         $project_id = (int) $request->input('project_id');
         $page_id = (int) $request->input('page_id');
+        $time_zone_hours = (int) $request->input('time_zone_hours');
+
         if($request->has('last_update'))
         {
             $last_update = (int) $request->input('last_update');
@@ -101,6 +104,17 @@ class PullController extends Controller
         {
             $threads = [];
             $comments = [];
+        }
+
+
+        foreach($threads as &$thread)
+        {
+            $thread['updated_at_formated'] = Date::createFromFormat('Y-m-d H:i:s', $thread['updated_at'])->addHours($time_zone_hours)->format('j F, H:i');
+        }
+
+        foreach($comments as &$comment)
+        {
+            $comment['updated_at_formated'] = Date::createFromFormat('Y-m-d H:i:s', $comment['updated_at'])->addHours($time_zone_hours)->format('j F, H:i');
         }
 
         return ['error' => false, 'content' => [

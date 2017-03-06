@@ -136,6 +136,7 @@ var app = new Vue({
         },
         appendThread : function (item) {
             item.state = 'idle';
+            item.active = false;
             if (item.author_id == this.currentUser.id) {
                 item.user = this.currentUser;
             } else {
@@ -168,7 +169,8 @@ var app = new Vue({
             var data = {
                 project_id : this.project_id,
                 page_id    : this.page_id,
-                last_update: this.lastUpdate
+                last_update: this.lastUpdate,
+                time_zone_hours   : -(new Date().getTimezoneOffset() / 60 )
             };
 
 
@@ -214,7 +216,7 @@ var app = new Vue({
                                             thread_value['title']        = value['title'];
                                             thread_value['description']  = value['description'];
                                             thread_value['index_number'] = value['index_number'];
-                                            thread_value['updated_at']   = value['updated_at'];
+                                            thread_value['updated_at_formated']   = value['updated_at_formated'];
                                             newItem                      = false; // Не новый элемент
                                         }
 
@@ -235,7 +237,7 @@ var app = new Vue({
                                             $.each(thread_value.comments, function (comment_key, comment_value) {
                                                 if (comment_value['id'] == value['id']) {
                                                     comment_value['description'] = value['description'];
-                                                    comment_value['updated_at'] = value['updated_at'];
+                                                    comment_value['updated_at_formated'] = value['updated_at_formated'];
                                                     newItem                      = false; // Не новый элемент
                                                 }
                                             });

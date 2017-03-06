@@ -1,6 +1,9 @@
 <script type="text/x-template" id="thread">
 
-    <div class="thread" м v-bind:style="{left: thread_data.left+'px', top: thread_data.top+'px'}">
+    <div class="thread"
+         v-bind:class="{active: thread_data.active}"
+         v-bind:id="'thread_'+thread_data.slug"
+         v-bind:style="{left: thread_data.left+'px', top: thread_data.top+'px'}">
         <div class="thread__mark" v-on:click.stop.prevent="">
             <span class="thread__number">@{{ thread_data.index_number }}</span>
         </div>
@@ -23,7 +26,7 @@
                 </div>
                 <div class="author__name-and-time">
                     <p class="author__name">@{{ thread_data.user.fio }}</p>
-                    <p class="author__time">@{{ thread_data.updated_at }}</p>
+                    <p class="author__time">@{{ thread_data.updated_at_formated }}</p>
                 </div>
             </div>
 
@@ -65,6 +68,10 @@
                 <textarea class="thread__input thread__answer--input"
                           placeholder="Комментарий"
                           v-model="comment_text"
+                          v-on:focus="thread_data.active = true"
+                          v-on:focusout="thread_data.active = false"
+
+
                           v-on:keydown.ctrl.13="addComment('')"
                           required="required"></textarea>
             </div>

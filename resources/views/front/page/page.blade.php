@@ -3,7 +3,7 @@
      <section id="app" data-page-id="{{$page->id}}" data-project-id="{{$page->project_id}}" >
         <h2 class="page-title">{{$page->title}}</h2>
         <p class="page-description">{{$page->description}}</p>
-
+         <a href="#thread_76881b1b_project">Ссылко для теста</a>
         <ul class="change-view">
             <li class="view-item">Макет</li>
             <li class="view-item">Текст</li>
