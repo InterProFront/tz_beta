@@ -17,7 +17,6 @@ class PullController extends Controller
      */
     public function __construct()
     {
-        Date::setLocale('ru');
     }
 
     public function draw()

@@ -44,8 +44,8 @@
                           v-model="comment_text"
                           v-on:keydown.ctrl.13="addComment()"
 
-                          v-on:focus="this.$parent.active = true"
-                          v-on:focusout="this.$parent.active = false"
+                          v-on:focus="setHover(true)"
+                          v-on:focusout="setHover(false)"
 
                           required="required"></textarea>
         </div>

@@ -28,9 +28,9 @@ var app = new Vue({
             this.getCurrentUser();
             this.fetchUpdate();
 
-            //setInterval(function () {
-            //    this.fetchUpdate();
-            //}.bind(this), 15000);
+            setInterval(function () {
+                this.fetchUpdate();
+            }.bind(this), 15000);
         },
         //==============================================================================================================
         getCurrentUser: function () {
@@ -118,6 +118,7 @@ var app = new Vue({
                     author_id : this.currentUser.id,
                     state     : 'add',
                     top       : top,
+                    active    : true,
                     left      : left,
                     user      : this.currentUser,
                     comments  : []
@@ -254,9 +255,22 @@ var app = new Vue({
                                 $.each(response.body.content.threads, function (key, value) {
                                     if (value['deleted'] == 1) {
 
-                                        _this.removeThread(value['id'])
+                                        _this.removeThread(key)
 
                                     }
+                                });
+
+                                $.each(response.body.content.comments, function (key, value) {
+                                    $.each(_this.threads, function (t_key, t_value) {
+
+                                        if(t_value['id'] == value['thread_id']){
+                                            if (value['deleted'] == 1) {
+
+                                                    _this.removeComment(t_key, value['id'] );
+                                            }
+                                        }
+
+                                    });
                                 });
 
 
@@ -272,16 +286,20 @@ var app = new Vue({
             );
         },
         //==============================================================================================================
-        removeThread : function (id) {
-            _this          = this;
-            var delete_key = -1;
-            $.each(this.threads, function (key, value) {
-                if (value['id'] == id) {
-                    delete_key = key;
+        removeThread : function ( key ) {
+            this.threads.splice( key ,1);
+        },
+
+        removeComment: function( thread_key, id ){
+            _this = this;
+            var deleted_key = -1;
+            $.each(this.threads[thread_key].comments, function(comment_key, comment_value){
+                if( comment_value['id'] == id){
+                    deleted_key = comment_key;
                 }
             });
-            if (delete_key >= 0) {
-                this.threads.splice(delete_key, 1);
+            if(deleted_key >= 0){
+                this.threads[thread_key].comments.splice(deleted_key, 1);
             }
         },
         //==============================================================================================================

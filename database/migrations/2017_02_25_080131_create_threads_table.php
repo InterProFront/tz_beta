@@ -20,7 +20,7 @@ class CreateThreadsTable extends Migration
             $table->boolean('deleted');
             $table->string('slug')->unique();
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
             $table->unsignedInteger('max_comment_number');
             $table->unsignedSmallInteger('top');
             $table->unsignedSmallInteger('left');

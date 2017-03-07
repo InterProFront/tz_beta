@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
             $table->unsignedInteger('in_thread_number');
             $table->boolean('deleted');
             $table->string('slug')->unique();
-            $table->string('description');
+            $table->text('description');
             $table->unsignedInteger('project_id');
             $table->unsignedInteger('page_id');
             $table->unsignedInteger('thread_id');

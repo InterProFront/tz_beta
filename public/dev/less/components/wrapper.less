@@ -1,6 +1,10 @@
+body{
+  overflow-y: scroll;
+}
 .wrapper{
   max-width: 100%;
   padding: 40px;
+
 }
 .page-title{
   padding: 40px 0 20px;
@@ -14,4 +18,24 @@
   color: #666666;
   font-family: @Arial;
   font-size: 16px;
+}
+
+.change-view{
+  list-style-type: none;
+  &__item{
+    display: inline-block;
+    font-size: 28px;
+    font-family: @Arial;
+    color: #333333;
+    padding: 5px 20px;
+    background: #ffffff;
+    &:hover{
+      cursor: pointer;
+    }
+    &.active{
+      background: #999999;
+      color: #ffffff;
+    }
+  }
+
 }

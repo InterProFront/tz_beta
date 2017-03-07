@@ -1,0 +1,98 @@
+.thread__list{
+  padding-top: 40px;
+}
+
+.text-thread{
+  list-style-type: none;
+  position: relative;
+  padding-left: 40px;
+  padding-bottom: 40px;
+  &__wrap{
+    display: flex;
+  }
+  &__column-content{
+    width: 70%;
+    box-sizing: border-box;
+    padding-right: 50px;
+  }
+  &__column-author{
+    width: 30%;
+  }
+  &__title{
+    color: #333333;
+    font-size:16px;
+    line-height: 1.5;
+    font-family: @Arial;
+    padding-bottom: 5px;
+    font-weight: bold;
+  }
+  &__content{
+    font-size: 16px;
+    line-height: 1.5em;
+    color: #666666;
+    font-family: @Arial;
+  }
+  &__author{
+    margin-top: 4px;
+  }
+  &__answer{
+    padding-top: 20px;
+    width: ~'calc(70% - 50px)';
+  }
+
+
+  &__options{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    &:hover{
+      .text-thread__options-list{
+        height: auto;
+        opacity: 1;
+        transition: opacity 0.75s ease;
+      }
+      .text-thread__option-item{
+        display: block;
+      }
+      .text-thread__icon{
+        background: #666666;
+      }
+    }
+  }
+  &__icon{
+    background: #999999;
+    width: 16px;
+    margin: 4px;
+    height: 16px;
+    mask-size: cover;
+    mask: url(../img/gear.svg) no-repeat 50% 50%;
+    &:hover, &:focus{
+      background: #666666;
+    }
+  }
+  &__options-list{
+    height: 0;
+    opacity: 0;
+
+    margin: 0;
+    padding: 0;
+    left: 24px;
+    top:-1px;
+    position: absolute;
+    border: 1px solid #999999;
+  }
+  &__option-item{
+    list-style-type: none;
+    display: none;
+    padding: 5px 10px;
+    font-family: @Arial;
+    color: #666666;
+    background: #FFFFFF;
+    &:hover, &:focus{
+      background: #e5e5e5;
+      cursor: pointer;
+    }
+  }
+}
