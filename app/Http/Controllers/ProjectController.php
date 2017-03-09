@@ -67,7 +67,7 @@ class ProjectController extends Controller
         {
             return ['error' => true, 'error_message' => 'Проект ('.$project_id.') не найден.'];
         }
-        elseif($project->account_id !== $account->id)
+        elseif((int)$project->account_id !== $account->id)
         {
             return ['error' => true, 'error_message' => 'Проект ('.$project->slug.') не принадлежит пользователю ('.$user->email.').'];
         }
