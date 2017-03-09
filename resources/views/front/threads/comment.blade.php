@@ -7,8 +7,8 @@
             <div class="thread__icon">
             </div>
             <ul class="thread__options-list">
-                <li class="thread__option-item" v-on:click="editThis()">Редактировать</li>
-                <li class="thread__option-item" v-on:click="removeThis()">Удалить</li>
+                <li class="thread__option-item" v-if="checkRule()" v-on:click="editThis()">Редактировать</li>
+                <li class="thread__option-item" v-if="checkRule()" v-on:click="removeThis()">Удалить</li>
                 <li class="thread__option-item">Готово</li>
                 <li class="thread__option-item" v-on:click="goToText()">Посмотреть на макете</li>
                 <li class="thread__option-item"><a v-on:click="addHash()">Ссылка на тред</a></li>

@@ -38,5 +38,5 @@
     <script src="/js/components/thread.js"></script>
     <script src="/js/components/text_thread.js"></script>
     <script src="/js/components/text_comment.js"></script>
-    <script src="/js/main.js"></script>
+    <script src="/js/main.js?12142"></script>
 @endsection

@@ -85,6 +85,9 @@ Vue.component('text_comment',{
                     scrollTop: $('.thread__body--comment[id=#thread_'+_this.comment_data.slug+']').offset().top
                 }, 600);
             },200);
+        },
+        checkRule: function(){
+            return this.$parent.$parent.currentUser.id == this.comment_data.athor_id;
         }
 
     }

@@ -16,8 +16,8 @@ class CreatePageviewsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('page_id');
-            $table->foreign('user_id')->references('id')->on('pages')->onDelete('cascade');
-            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
+//            $table->foreign('user_id')->references('id')->on('pages')->onDelete('cascade');
+//            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
             $table->unsignedInteger('thread_last_number');
             $table->unsignedInteger('comment_last_number');
         });

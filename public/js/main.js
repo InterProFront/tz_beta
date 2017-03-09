@@ -88,6 +88,7 @@ var app = new Vue({
             var haveUser = false;
             var user;
             var _this    = this;
+
             var data     = {
                 id: id
             };
@@ -97,8 +98,6 @@ var app = new Vue({
                     user     = value;
                     haveUser = true;
                     return false;
-                } else {
-                    haveUser = false;
                 }
             });
 
@@ -174,11 +173,12 @@ var app = new Vue({
         appendThread : function (item) {
             item.state = 'idle';
             item.active = false;
+
             if (item.author_id == this.currentUser.id) {
                 item.user = this.currentUser;
             } else {
                 if (typeof item.user == 'undefined') {
-                    this.getUser(item.ownerID);
+                    item.user = this.getUser(item.author_id);
                 }
             }
             item.comments   = [];
@@ -194,7 +194,7 @@ var app = new Vue({
                 item.user = this.currentUser;
             } else {
                 if (typeof item.user == 'undefined') {
-                    this.getUser(item.ownerID);
+                    item.user = this.getUser(item.author_id);
                 }
             }
             thread_item.comments.push(item);

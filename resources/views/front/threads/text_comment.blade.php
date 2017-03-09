@@ -5,8 +5,8 @@
             <div class="text-thread__icon">
             </div>
             <ul class="text-thread__options-list">
-                <li class="text-thread__option-item" v-on:click="editThis()">Редактировать</li>
-                <li class="text-thread__option-item" v-on:click="removeThis()">Удалить</li>
+                <li class="text-thread__option-item" v-if="checkRule()" v-on:click="editThis()">Редактировать</li>
+                <li class="text-thread__option-item" v-if="checkRule()" v-on:click="removeThis()">Удалить</li>
                 <li class="text-thread__option-item">Готово</li>
                 <li class="text-thread__option-item" v-on:click.stop.prevent="goToMaket()">Посмотреть на макете</li>
                 <li class="text-thread__option-item"><a v-bind:href="'#text_'+comment_data.slug">Ссылка на комментарий</a></li>

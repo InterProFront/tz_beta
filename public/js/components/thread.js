@@ -110,6 +110,9 @@ Vue.component('thread', {
         },
         addHash: function(){
             window.location.hash = '#thread_'+this.thread_data.slug;
+        },
+        checkRule: function(){
+            return this.$parent.currentUser.id == this.thread_data.athor_id;
         }
     }
 });

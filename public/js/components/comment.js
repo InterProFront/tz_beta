@@ -86,6 +86,9 @@ Vue.component('comment',{
         },
         addHash: function(){
             window.location.hash = '#thread_'+this.thread_data.slug;
+        },
+        checkRule: function(){
+            return this.$parent.$parent.currentUser.id == this.comment_data.athor_id;
         }
 
     }

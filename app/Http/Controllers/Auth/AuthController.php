@@ -52,6 +52,7 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'fio' => 'required',
         ]);
     }
 
@@ -63,10 +64,18 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $avs = ['/img/a1.jpg',
+            '/img/a2.png',
+            '/img/a3.gif',
+            '/img/a4.jpg'
+            ];
+        $rand = rand(0,3);
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'fio'      => $data['fio'],
+            'avatar'   => $avs[$rand]
         ]);
     }
 }
