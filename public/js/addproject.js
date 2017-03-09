@@ -82,6 +82,50 @@ Vue.component('add_page',{
     }
 });
 
+
+Vue.component('add_user',{
+    template: '#add_user',
+    data: function(){
+        return {
+            email: this.email
+        }
+    },
+    methods: {
+        addUser: function( project_id ){
+            if( this.email  != '' ) {
+                var _this = this;
+
+                data = {
+                  email: this.email,
+                  project_id : project_id
+
+                };
+
+
+                this.$http.post('/add_member', data , {
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                }).then(
+                    function(response){
+                        if(response.body.error){
+                            alert(response.body.error_message);
+                        }else{
+                            //window.location.href = '/project/'+response.body.content.slug;
+                            alert('success');
+                        }
+                    },
+                    function(response){
+
+                    }
+                )
+            }
+        }
+    }
+});
+
+
+
 var app = new Vue({
     el : '#app',
     data: {

@@ -25,12 +25,45 @@ var app = new Vue({
             this.project_id = project_id;
             this.page_id    = page_id;
 
+
             this.getCurrentUser();
             this.fetchUpdate();
 
             setInterval(function () {
                 this.fetchUpdate();
             }.bind(this), 15000);
+
+            hash = window.location.hash.split('_');
+
+            if( hash[0] == '#thread' ){
+                _this =  this;
+                slug  = hash[1] +'_' + hash[2];
+
+                setTimeout(function(){
+                    $.each(_this.threads, function(key, object){
+                        if(object.slug == slug){
+                            object.active = true;
+                        }
+                    });
+                }, 200);
+
+                setTimeout(function(){
+                    $('body,html').animate({
+                        scrollTop: $('[id='+window.location.hash+']').offset().top
+                    }, 600);
+                },200);
+
+            }else if(hash[0]  == '#text'){
+
+                this.setTabState('text');
+                setTimeout(function(){
+                    $('body,html').animate({
+                        scrollTop: $('[id='+window.location.hash+']').offset().top
+                    }, 600);
+                },200);
+            }
+
+
         },
         //==============================================================================================================
         getCurrentUser: function () {
@@ -108,6 +141,9 @@ var app = new Vue({
             var left = event.pageX - $(event.currentTarget).offset().left - 15;
             var top  = event.pageY - $(event.currentTarget).offset().top - 15;
 
+            $.each(this.threads, function(key, object){
+               object['active'] = false;
+            });
 
             if (this.buffer.length <= 0) {
                 this.buffer.push({
@@ -253,11 +289,14 @@ var app = new Vue({
 
                                 // удаляем все что пришли к нам
                                 $.each(response.body.content.threads, function (key, value) {
-                                    if (value['deleted'] == 1) {
+                                    $.each(_this.threads, function(t_key, t_value){
+                                        if (value['deleted'] == 1) {
+                                            if( value['id'] == t_value['id']  ){
+                                                _this.removeThread(t_key)
+                                            }
 
-                                        _this.removeThread(key)
-
-                                    }
+                                        }
+                                    });
                                 });
 
                                 $.each(response.body.content.comments, function (key, value) {

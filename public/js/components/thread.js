@@ -96,6 +96,20 @@ Vue.component('thread', {
 
             this.comment_text = '';
 
+        },
+        goToText: function(){
+            this.$parent.setTabState('text');
+
+            window.location.hash = '#thread_'+this.thread_data.slug;
+            _this = this;
+            setTimeout(function(){
+                $('body,html').animate({
+                    scrollTop: $('.text-thread[id=#text_'+_this.thread_data.slug+']').offset().top
+                }, 600);
+            },200);
+        },
+        addHash: function(){
+            window.location.hash = '#thread_'+this.thread_data.slug;
         }
     }
 });

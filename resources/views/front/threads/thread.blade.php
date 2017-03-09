@@ -2,7 +2,7 @@
 
     <div class="thread"
          v-bind:class="{active: thread_data.active}"
-         v-bind:id="'thread_'+thread_data.slug"
+         v-bind:id="'#thread_'+thread_data.slug"
          v-bind:style="{left: thread_data.left+'px', top: thread_data.top+'px'}">
         <div class="thread__mark" v-on:click.stop.prevent="">
             <span class="thread__number">@{{ thread_data.index_number }}</span>
@@ -16,6 +16,8 @@
                         <li class="thread__option-item" v-on:click="editThis()">Редактировать</li>
                         <li class="thread__option-item" v-on:click="removeThis()">Удалить</li>
                         <li class="thread__option-item">Готово</li>
+                        <li class="thread__option-item" v-on:click="goToText()">Посмотреть на макете</li>
+                        <li class="thread__option-item"><a v-on:click="addHash()">Ссылка на тред</a></li>
                     </ul>
                 </div>
 

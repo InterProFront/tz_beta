@@ -1,5 +1,5 @@
-Vue.component('comment',{
-    template: '#comment',
+Vue.component('text_comment',{
+    template: '#text_comment',
     props   : ['comment_data','comment_number'],
     data: function(){
         return {
@@ -74,18 +74,17 @@ Vue.component('comment',{
         setHover: function( status ){
             this.$parent.thread_data.active = status;
         },
-        goToText: function(){
-            this.$parent.$parent.setTabState('text');
-            window.location.hash = '#text_'+this.comment_data.slug;
+        goToMaket: function(){
+            this.$parent.$parent.setTabState('maket');
+
+            window.location.hash = '#thread_'+this.comment_data.slug;
+            this.$parent.thread_data.active = true;
             _this = this;
             setTimeout(function(){
                 $('body,html').animate({
-                    scrollTop: $('.text-thread--comment[id=#text_'+_this.comment_data.slug+']').offset().top
+                    scrollTop: $('.thread__body--comment[id=#thread_'+_this.comment_data.slug+']').offset().top
                 }, 600);
             },200);
-        },
-        addHash: function(){
-            window.location.hash = '#thread_'+this.thread_data.slug;
         }
 
     }

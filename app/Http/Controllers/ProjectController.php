@@ -7,6 +7,7 @@ use App\Member;
 use App\Project;
 use App\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -47,21 +48,21 @@ class ProjectController extends Controller
 
         $email = $request->input('email');
         $project_id = (int) $request->input('project_id');
-
         //[[[
         DB::beginTransaction();
 
         $user = $request->user();
 
-        $account = Account::where('owner_id', $user->id);
+        $account = Account::where('owner_id', $user->id)->first();
 
         if(!$account)
         {
             return ['error' => true, 'error_message' => 'Пользователю ('.$user->email.') не принадлежит ни один проект.'];
         }
 
-        $project = Project::where('project_id', $project_id)->first();
-
+        $project = Project::where('id', $project_id)->first();
+        Log::info($project->account_id);
+        Log::info($account->id);
         if(!$project)
         {
             return ['error' => true, 'error_message' => 'Проект ('.$project_id.') не найден.'];

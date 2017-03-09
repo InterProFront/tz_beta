@@ -95,7 +95,19 @@ Vue.component('text_thread', {
                 });
 
             this.comment_text = '';
+        },
+        goToMaket: function(){
+            this.$parent.setTabState('maket');
 
+            window.location.hash = '#thread_'+this.thread_data.slug;
+            this.thread_data.active = true;
+            _this = this;
+            setTimeout(function(){
+                $('body,html').animate({
+                    scrollTop: $('.thread[id=#thread_'+_this.thread_data.slug+']').offset().top - 20
+                }, 600);
+            },200);
         }
+
     }
 });

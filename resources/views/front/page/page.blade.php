@@ -4,8 +4,8 @@
         <h2 class="page-title">{{$page->title}}</h2>
         <p class="page-description">{{$page->description}}</p>
         <ul class="change-view">
-            <li class="change-view__item" v-bind:class="{active: tab == 'maket'}" v-on:click="tab = 'maket'">Макет</li>
-            <li class="change-view__item" v-bind:class="{active: tab == 'text'}" v-on:click="tab = 'text'">Текст</li>
+            <li class="change-view__item" v-bind:class="{active: tab == 'maket'}" v-on:click="setTabState('maket')">Макет</li>
+            <li class="change-view__item" v-bind:class="{active: tab == 'text'}" v-on:click="setTabState('text')">Текст</li>
         </ul>
 
 
@@ -29,6 +29,7 @@
     @include('front.threads.comment')
 
     @include('front.threads.text_thread')
+    @include('front.threads.text_comment')
 @endsection
 
 @section('scripts')
@@ -36,5 +37,6 @@
     <script src="/js/components/comment.js"></script>
     <script src="/js/components/thread.js"></script>
     <script src="/js/components/text_thread.js"></script>
+    <script src="/js/components/text_comment.js"></script>
     <script src="/js/main.js"></script>
 @endsection

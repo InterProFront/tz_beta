@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'], function()
 
     Route::post('get_current_user', 'UserController@getCurrentUser');
     Route::post('get_user', 'UserController@getUser');
+    Route::post('add_member', 'ProjectController@addMember');
     // system routes
     Route::post('pull_changes', ['as' => 'pull_changes', 'uses' => 'PullController@pullChanges']);
     Route::post('update_thread', ['as' => 'update_thread', 'uses' => 'ThreadController@updateThread']);

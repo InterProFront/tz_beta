@@ -37,6 +37,13 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="email" class="col-md-4 control-label">FIO</label>
+
+                            <div class="col-md-6">
+                                <input id="fio" type="text" class="form-control" name="fio">
+                            </div>
+                        </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
