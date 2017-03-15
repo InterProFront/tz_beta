@@ -31,6 +31,7 @@ class CreateThreadsTable extends Migration
             $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
+            $table->timestamp('self_updated_at');
         });
     }
 

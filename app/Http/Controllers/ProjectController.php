@@ -7,6 +7,7 @@ use App\Member;
 use App\Project;
 use App\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -200,6 +201,38 @@ class ProjectController extends Controller
             {
                 $project->slug = $request->input('slug');
             }*/
+
+            if($request->hasFile('picture'))
+            {
+                $uploadedFile = $request->file('picture');
+
+                $public_file_path = public_path('uploads/projects/project_'.$project->id);
+
+                if(!File::isDirectory($public_file_path))
+                {
+                    File::makeDirectory($public_file_path, $mode = 0755);
+                }
+
+                $public_file_path .= '/pages';
+
+                if(!File::isDirectory($public_file_path))
+                {
+                    File::makeDirectory($public_file_path, $mode = 0755);
+                }
+
+                $file_path = '/uploads/projects/project_'.$project->id.'/icons';
+
+                $file_name = 'icon'.$project->id.'.'.$uploadedFile->guessClientExtension();
+
+                $uploadedFile->move(
+                    $public_file_path,
+                    $file_name
+                );
+
+                chmod($public_file_path.'/'.$file_name, 0644);
+
+                $project->picture = $file_path.'/'.$file_name;
+            }
 
             if($itnew)
             {

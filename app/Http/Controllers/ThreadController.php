@@ -7,6 +7,7 @@ use App\Thread;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Jenssegers\Date\Date;
 
 class ThreadController extends Controller
 {
@@ -168,6 +169,7 @@ class ThreadController extends Controller
                 $thread->slug = $this->generateSlug($thread->id).'_project';
             }
 
+            $thread->self_updated_at = Date::createFromTimestamp(time());
             $thread->save();
 
             DB::commit();

@@ -131,14 +131,21 @@ class PageController extends Controller
             {
                 $uploadedFile = $request->file('picture');
 
-                $file_path = '/files/projects/project_'.$project->id;
-                $public_file_path = public_path() . $file_path;
+                $public_file_path = public_path('uploads/projects/project_'.$project->id);
 
                 if(!File::isDirectory($public_file_path))
                 {
                     File::makeDirectory($public_file_path, $mode = 0755);
                 }
 
+                $public_file_path .= '/pages';
+
+                if(!File::isDirectory($public_file_path))
+                {
+                    File::makeDirectory($public_file_path, $mode = 0755);
+                }
+
+                $file_path = '/uploads/projects/project_'.$project->id.'/pages';
                 $file_name = 'page'.$page->id.'.'.$uploadedFile->guessClientExtension();
 
                 $uploadedFile->move(
