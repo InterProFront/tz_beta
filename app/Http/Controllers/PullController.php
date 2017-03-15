@@ -85,7 +85,7 @@ class PullController extends Controller
         $ruDate = Date::createFromTimestamp($last_update)->format('d F Y');
         $last_update_date = date('Y-m-d H:i:s', $last_update);
 
-        $threads = DB::table('threads')->where('page_id', $page_id)->where('updated_at', '>', $last_update_date)->get();
+        $threads = DB::table('threads')->where('page_id', $page_id)->where('self_updated_at', '>', $last_update_date)->get();
         $comments = DB::table('comments')->where('page_id', $page_id)->where('updated_at', '>', $last_update_date)->get();
 
         $thread_count = count($threads);
