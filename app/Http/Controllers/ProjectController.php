@@ -213,7 +213,7 @@ class ProjectController extends Controller
                     File::makeDirectory($public_file_path, $mode = 0755);
                 }
 
-                $public_file_path .= '/pages';
+                $public_file_path .= '/icons';
 
                 if(!File::isDirectory($public_file_path))
                 {

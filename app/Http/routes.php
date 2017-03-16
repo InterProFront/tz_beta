@@ -17,8 +17,6 @@ Route::get('/', function(){
 
 Route::auth();
 
-
-
 //-------------------------------------------------------
 Route::group(['middleware' => 'auth'], function()
 {

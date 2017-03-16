@@ -20,6 +20,7 @@ class CreateProjectsTable extends Migration
             $table->boolean('deleted');
             $table->string('title');
             $table->string('description');
+            $table->string('picture');
             $table->unsignedInteger('max_page_number');
             $table->unsignedInteger('max_member_number');
             $table->unsignedInteger('account_id');
