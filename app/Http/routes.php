@@ -57,3 +57,7 @@ Route::get('/marks', function(){
 Route::get('draw_pulling', ['as' => 'draw_pulling', 'uses' => 'PullController@draw']);
 Route::get('draw_thread', ['as' => 'draw_thread', 'uses' => 'ThreadController@drawthread']);
 Route::get('draw_comment', ['as' => 'draw_comment', 'uses' => 'CommentController@drawcomment']);
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
