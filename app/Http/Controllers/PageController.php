@@ -173,7 +173,9 @@ class PageController extends Controller
             return ['error' => true, 'error_message' => $e->getMessage()];
         }
 
-        return ['error' => false, 'number' => $number, 'error_message' => ''];
+        return ['error' => false,'content'=>
+                            ['number' => $number,
+                                'slug' => $page->slug], 'error_message' => ''];
     }
 
 }

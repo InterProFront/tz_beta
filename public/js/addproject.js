@@ -3,16 +3,39 @@ Vue.component('add_project',{
     data: function(){
         return {
             title: this.title,
-            description: this.description
+            description: this.description,
+            file: this.file,
+            image: this.image
         }
     },
     methods: {
+        onFileChange: function(e){
+            var vm = this;
+            var files = e.target.files || e.dataTransfer.files;
+            if (files.length > 0){
+
+                this.file = files[0];
+                var reader = new FileReader();
+
+                reader.onload = (e) => {
+                    vm.image = e.target.result;
+                };
+                reader.readAsDataURL(this.file);
+            }
+        },
+
+
         newProject: function(){
+            _this = this;
             if( this.title  != '' || this.description != '') {
-                this.$http.post('/update_project', {
-                    title: this.title,
-                    description: this.description
-                }, {
+
+                data = new FormData();
+
+                data.append('picture', _this.file);
+                data.append('title', _this.title);
+                data.append('description', _this.description);
+
+                this.$http.post('/update_project', data, {
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
@@ -40,7 +63,8 @@ Vue.component('add_page',{
         return {
             title: this.title,
             description: this.description,
-            file: this.file
+            file: this.file,
+            image: this.image
         }
     },
     methods: {
@@ -63,8 +87,12 @@ Vue.component('add_page',{
                         if(response.body.error){
                             alert(response.body.error_message);
                         }else{
-                            //window.location.href = '/project/'+response.body.content.slug;
-                            alert('success');
+                            url = window.location.href;
+                            var to = url.lastIndexOf('/') +1;
+
+                            x =  url.substring(0,to);
+                            window.location.href = x+'page/'+response.body.content.slug
+
                         }
                     },
                     function(response){
@@ -74,9 +102,16 @@ Vue.component('add_page',{
             }
         },
         onFileChange: function(e){
+            var vm = this;
             var files = e.target.files || e.dataTransfer.files;
             if (files.length > 0){
                 this.file = files[0];
+                var reader = new FileReader();
+
+                reader.onload = (e) => {
+                    vm.image = e.target.result;
+                };
+                reader.readAsDataURL(this.file);
             }
         }
     }

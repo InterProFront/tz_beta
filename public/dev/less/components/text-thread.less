@@ -94,9 +94,11 @@
     position: absolute;
     left: 0;
     top: 0;
+    z-index: 20;
     width: 24px;
     height: 24px;
     &:hover{
+      z-index: 21;
       .text-thread__options-list{
         height: auto;
         opacity: 1;
@@ -115,9 +117,12 @@
     width: 16px;
     margin: 4px;
     height: 16px;
+    position: relative;
+    z-index: 15;
     mask-size: cover;
     mask: url(../img/gear.svg) no-repeat 50% 50%;
     &:hover, &:focus{
+      z-index: 20;
       background: #666666;
     }
   }

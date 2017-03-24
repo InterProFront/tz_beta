@@ -109,7 +109,7 @@ Vue.component('text_thread', {
             },200);
         },
         checkRule: function(){
-            return this.$parent.currentUser.id == this.thread_data.athor_id;
+            return this.$parent.currentUser.id == this.thread_data.author_id;
         }
 
     }

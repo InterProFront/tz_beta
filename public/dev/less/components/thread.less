@@ -62,12 +62,15 @@
   &__icon{
     background: #999999;
     width: 16px;
+    position: relative;
+    z-index: 15;
     margin: 4px;
     height: 16px;
     mask-size: cover;
     mask: url(../img/gear.svg) no-repeat 50% 50%;
     &:hover, &:focus{
       background: #666666;
+      z-index: 20;
     }
   }
   &__options-list{

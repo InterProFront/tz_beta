@@ -5,7 +5,7 @@
     <nav class="header__nav">
         <ul class="header__main-menu main-menu">
             <li class="main-menu__item"><a class="main-menu__link" href="/projects">Все проекты</a></li>
-            <li class="main-menu__item"><a class="main-menu__link" href="/options">Настройки</a></li>
+            <li class="main-menu__item"><a class="main-menu__link" href="/options">Профиль</a></li>
             <li class="main-menu__item"><a class="main-menu__link" href="/logout">Выход</a></li>
         </ul>
     </nav>

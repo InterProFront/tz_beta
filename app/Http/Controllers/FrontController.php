@@ -13,7 +13,8 @@ class FrontController extends Controller
 {
 
     public  function userOptions(){
-        return view('');
+
+        return view('front.user.options');
     }
 
 

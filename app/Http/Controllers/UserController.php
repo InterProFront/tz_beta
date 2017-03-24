@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -24,6 +25,7 @@ class UserController extends Controller
      */
     function updateUser(Request $request)
     {
+        Log::info($request->input('password'));
         $validator = Validator::make(
             $request->all(),
             [
@@ -62,19 +64,21 @@ class UserController extends Controller
 
                 if($request->has('fio'))
                 {
+                    Log::info('фио');
                     $user->fio = $request->input('fio');
                 }
 
                 if($request->has('name'))
                 {
+                    Log::info('Наме');
                     $user->name = $request->input('name');
                 }
 
                 if($request->hasFile('avatar'))
                 {
+                    Log::info('Аватар');
                     $uploadedFile = $request->file('avatar');
-
-                    $file_path = public_path() . '/files/avatars';
+                    $file_path = public_path() . '/uploads/users/avatars/';
 
                     if(!File::isDirectory($file_path))
                     {
@@ -90,7 +94,7 @@ class UserController extends Controller
 
                     chmod($file_path.'/'.$file_name, 0644);
 
-                    $user->avatar = '/files/avatars/'.$file_name;
+                    $user->avatar = '/uploads/users/avatars/'.$file_name;
                 }
 
                 $user->save();

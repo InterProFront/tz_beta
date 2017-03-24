@@ -87,7 +87,7 @@ Vue.component('text_comment',{
             },200);
         },
         checkRule: function(){
-            return this.$parent.$parent.currentUser.id == this.comment_data.athor_id;
+            return this.$parent.$parent.currentUser.id == this.comment_data.author_id;
         }
 
     }

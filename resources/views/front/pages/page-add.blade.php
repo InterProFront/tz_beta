@@ -8,6 +8,8 @@
 
 
     <script type="text/x-template" id="add_page">
+        <div class="form-wrap">
+
         <div class="form-group">
             <div class="form-group__row">
                 <label class="form-group__title" >Название Страницы</label>
@@ -23,6 +25,10 @@
             </div>
             <div class="form-group__row form-group__row--reverse">
                 <button class="button" v-on:click="newPage({{$project->id}})">Создать проект</button>
+            </div>
+        </div>
+            <div class="form__preview">
+                <img v-bind:src="image" class="form-group__preview" alt="">
             </div>
         </div>
     </script>

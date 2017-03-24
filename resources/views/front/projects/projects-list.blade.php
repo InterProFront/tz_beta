@@ -7,7 +7,7 @@
                 <li class="projects-list__item project-item">
                     <a href="/project/{{$item->slug}}">
                         <div class="project-item__image-wrap">
-                            <img src="/img/place.jpg" alt="">
+                            <img src="{{$item->picture}}" alt="">
                         </div>
                         <div class="project-item__text-wrap">
                             <p class="project-item__project-name">{{$item->title}}</p>

@@ -1,5 +1,17 @@
+.form-wrap{
+  display: flex;
+}
+.form__preview{
+  max-width: 50%;
+  min-width: 50%;
+  box-sizing: border-box;
+  padding-left: 2.5%;
+}
 .form-group{
-  max-width: 600px;
+  max-width: 50%;
+  min-width: 50%;
+  box-sizing: border-box;
+  padding-right: 2.5%;
   &__row{
     margin-bottom: 20px;
     &--reverse{
@@ -13,8 +25,11 @@
     display: block;
     font-size: 16px;
   }
-
+  &__preview{
+    max-width: 100%;
+  }
 }
+
 .form-control{
   width: 100%;
   font-size: 16px;
