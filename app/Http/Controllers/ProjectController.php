@@ -232,6 +232,8 @@ class ProjectController extends Controller
                 chmod($public_file_path.'/'.$file_name, 0644);
 
                 $project->picture = $file_path.'/'.$file_name;
+            }else{
+                $project->picture = '/img/project.png';
             }
 
             if($itnew)

@@ -16,7 +16,8 @@ var app = new Vue({
         threads: [],
 
         lastUpdate: 0,
-
+        lastThread: 0,
+        lastComment: 0,
 
         buffer: []
     },
@@ -197,6 +198,7 @@ var app = new Vue({
                     item.user = this.getUser(item.author_id);
                 }
             }
+            this.lastComment = this.number;
             thread_item.comments.push(item);
         },
         //==============================================================================================================
@@ -308,11 +310,8 @@ var app = new Vue({
                                                     _this.removeComment(t_key, value['id'] );
                                             }
                                         }
-
                                     });
                                 });
-
-
                             }
                             // Время последнего обновления
                             _this.lastUpdate = response.body.last_update;
@@ -328,7 +327,6 @@ var app = new Vue({
         removeThread : function ( key ) {
             this.threads.splice( key ,1);
         },
-
         removeComment: function( thread_key, id ){
             _this = this;
             var deleted_key = -1;
@@ -347,4 +345,8 @@ var app = new Vue({
         }
     }
 });
-app.init($('#app').data('project-id'), $('#app').data('page-id'));
+
+app.init(
+    $('#app').data('project-id'),
+    $('#app').data('page-id')
+);

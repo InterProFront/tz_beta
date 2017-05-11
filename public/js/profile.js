@@ -14,10 +14,10 @@ var profile = Vue.component('profile',{
             data.append('fio', this.user.fio);
             data.append('name', this.user.name);
             data.append('avatar', this.avatar_file);
-            if( this.password != ''){
-                data.append('password', this.password);
-                data.append('password_confirmation', this.password);
-            }
+            //if( this.password != ''){
+            //    data.append('password', this.password);
+            //    data.append('password_confirmation', this.password);
+            //}
 
             this.$http.post('/update_user', data, {
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
@@ -32,6 +32,7 @@ var profile = Vue.component('profile',{
                     },
                     function (response) {
                         // error response
+                        console.log(response.body);
                     }
                 );
         },

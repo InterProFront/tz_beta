@@ -21,6 +21,7 @@ class FrontController extends Controller
     public function getProjects(){
 
         $project = Auth::user()->projects;
+
         return view('front.projects.projects-list',[
             'projects' => $project
         ]);

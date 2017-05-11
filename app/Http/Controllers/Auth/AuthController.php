@@ -64,18 +64,13 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        $avs = ['/img/a1.jpg',
-            '/img/a2.png',
-            '/img/a3.gif',
-            '/img/a4.jpg'
-            ];
-        $rand = rand(0,3);
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'fio'      => $data['fio'],
-            'avatar'   => $avs[$rand]
+            'avatar'   => '/img/ava.jpeg'
         ]);
     }
 }

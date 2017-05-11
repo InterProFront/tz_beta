@@ -25,12 +25,10 @@ class UserController extends Controller
      */
     function updateUser(Request $request)
     {
-        Log::info($request->input('password'));
         $validator = Validator::make(
             $request->all(),
             [
                 'name' => 'alpha_dash',
-                'password' => 'confirmed|min:6'
             ]
         );
 

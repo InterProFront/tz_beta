@@ -3,6 +3,11 @@
     <section id="app">
         <h2 class="page-title">{{$project->title}}</h2>
         <p class="page-description">{{$project->description}}</p>
+        <div class="user-block">
+            @foreach($project->members as $uitem)
+                <img class="user-block__item" src="{{$uitem->avatar}}" alt="{{$uitem->fio}}" title="{{$uitem->fio}}">
+            @endforeach
+        </div>
         <add_user></add_user>
         <ul class="projects-list">
             @foreach($pages as $item)
@@ -16,6 +21,19 @@
                             <p class="project-item__project-description">{{$item->description}}</p>
                         </div>
                     </a>
+                    <p>
+                        <span class="counter  @if( $item->max_thread_number -  $item->pageviews->where('user_id', Auth::user()->id)->first()['thread_last_number'] > 0)
+                                counter--red
+                        @endif">
+                            <i class="fa fa-bullseye"></i> {{$item->threads->count()}}
+                        </span>
+                        <span class="counter @if( $item->max_comment_number -  $item->pageviews->where('user_id', Auth::user()->id)->first()['comment_last_number'] > 0)
+                                counter--red
+                        @endif         ">
+                            <i class="fa fa-comments"></i> {{$item->comments->count()}}
+                        </span>
+
+                    </p>
                 </li>
             @endforeach
             <li class="projects-list__item project-item">

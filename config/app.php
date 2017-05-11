@@ -158,7 +158,6 @@ return [
 
 
         Jenssegers\Date\DateServiceProvider::class
-
     ],
 
     /*

@@ -11,10 +11,10 @@
     <script type="text/x-template" id="profile">
         <div class="profile">
             <div class="profile__user-info">
-                <div class="profile__avatar-block">
+                <label class="profile__avatar-block">
                     <img v-bind:src="user.avatar" alt="" class="profile__avatar">
                     <input type="file" class="form-control" v-on:change="onFileChange($event)">
-                </div>
+                </label>
                 <div class="profile__info form-group">
                     <div class="form-group__row">
                         <label class="form-group__title">ФИО</label>
